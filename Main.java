@@ -2,7 +2,7 @@ public class Main {
     public static void main(String[] args) {
         boolean[][] schedule = new boolean[8][60];
         AppointmentBook a = new AppointmentBook(schedule);
-
+        //Table of 6 things, but only 3 are a yes
         for (int i = 10; i < 15; i++) {
             schedule[1][i] = true;
         }
@@ -12,10 +12,22 @@ public class Main {
         for (int i = 50; i < 60; i++) {
             schedule[1][i] = true;
         }
-
-        //Testing
+        //Testing those 3
         System.out.println(a.findFreeBlock(2, 15));
+        System.out.println(a.findFreeBlock(2, 9));
+        System.out.println(a.findFreeBlock(2, 20));
 
-        //Currently on walkthrough p3
+        schedule = new boolean[8][60];
+        //This is the big table so we need a lot of rows but only for the availables
+        for (int i = 25; i < 30; i++) schedule[1][i] = true;
+        for (int i = 0; i < 15; i++) schedule[2][i] = true;
+        for (int i = 41; i < 60; i++) schedule[2][i] = true;
+        for (int i = 5; i < 30; i++) schedule[3][i] = true;
+        for (int i = 44; i < 60; i++) schedule[3][i] = true;
+
+        AppointmentBook b = new AppointmentBook(schedule);
+        System.out.println(b.makeAppointment(2, 4, 22));
+        System.out.println(b.makeAppointment(3, 4, 3));
+        System.out.println(b.makeAppointment(2, 4, 30));
     }
 }
