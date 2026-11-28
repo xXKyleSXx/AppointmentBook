@@ -1,33 +1,78 @@
+import java.io.IOException;
+import java.util.Scanner;
+import java.io.File;
+
 public class Main {
-    public static void main(String[] args) {
-        boolean[][] schedule = new boolean[8][60];
-        AppointmentBook a = new AppointmentBook(schedule);
-        //Table of 6 things, but only 3 are a yes
-        for (int i = 10; i < 15; i++) {
-            schedule[1][i] = true;
-        }
-        for (int i = 30; i < 45; i++) {
-            schedule[1][i] = true;
-        }
-        for (int i = 50; i < 60; i++) {
-            schedule[1][i] = true;
-        }
+    public static void main(String[] args) throws IOException {
+        // boolean[][] schedule = new boolean[8][60];
+        // AppointmentBook a = new AppointmentBook(schedule);
+        // //Table of 6 things, but only 3 are a yes
+        // for (int i = 10; i < 15; i++) {
+        //     schedule[1][i] = true;
+        // }
+        // for (int i = 30; i < 45; i++) {
+        //     schedule[1][i] = true;
+        // }
+        // for (int i = 50; i < 60; i++) {
+        //     schedule[1][i] = true;
+        // }
         //Testing those 3
-        System.out.println(a.findFreeBlock(2, 15));
-        System.out.println(a.findFreeBlock(2, 9));
-        System.out.println(a.findFreeBlock(2, 20));
+        // System.out.println(a.findFreeBlock(2, 15));
+        // System.out.println(a.findFreeBlock(2, 9));
+        // System.out.println(a.findFreeBlock(2, 20));
 
-        schedule = new boolean[8][60];
-        //This is the big table so we need a lot of rows but only for the availables
-        for (int i = 25; i < 30; i++) schedule[1][i] = true;
-        for (int i = 0; i < 15; i++) schedule[2][i] = true;
-        for (int i = 41; i < 60; i++) schedule[2][i] = true;
-        for (int i = 5; i < 30; i++) schedule[3][i] = true;
-        for (int i = 44; i < 60; i++) schedule[3][i] = true;
+        // schedule = new boolean[8][60];
+        // //This is the big table so we need a lot of rows but only for the availables
+        // for (int i = 25; i < 30; i++) schedule[1][i] = true;
+        // for (int i = 0; i < 15; i++) schedule[2][i] = true;
+        // for (int i = 41; i < 60; i++) schedule[2][i] = true;
+        // for (int i = 5; i < 30; i++) schedule[3][i] = true;
+        // for (int i = 44; i < 60; i++) schedule[3][i] = true;
 
-        AppointmentBook b = new AppointmentBook(schedule);
-        System.out.println(b.makeAppointment(2, 4, 22));
-        System.out.println(b.makeAppointment(3, 4, 3));
-        System.out.println(b.makeAppointment(2, 4, 30));
+        // AppointmentBook b = new AppointmentBook(schedule);
+        // System.out.println(b.makeAppointment(2, 4, 22));
+        // System.out.println(b.makeAppointment(3, 4, 3));
+        // System.out.println(b.makeAppointment(2, 4, 30));
+    
+        AppointmentBook[] schedules = new AppointmentBook[100];
+        File f = new File("schedules.txt");
+        Scanner s = new Scanner(f);
+        int i = 0;
+        boolean[][] schedule = new boolean[8][60];
+        int j = 0;
+        while (s.hasNextLine()) {
+            while (j < schedule.length) {
+                String line = s.nextLine();
+                if (line.length() > 0) {
+                    j++;
+                }
+                else schedule[j] = getRow(line);
+            }
+            schedules[i] = new AppointmentBook(schedule);
+            i++;
+        }
+            f = new File ("requests.txt");
+            s = new Scanner(f);
+            int meetings = 0;
+        while (s.hasNextLine()) {
+            int schedule2 = s.nextInt();
+            int start = s.nextInt();
+            int end = s.nextInt();
+            int duration = s.nextInt();
+            if (schedules[schedule2].makeAppointment(start, end, duration)) {
+                meetings++;
+            }
+        }
+        System.out.println(meetings);
+    }
+    public static boolean[] getRow (String s) {
+        Scanner scanner = new Scanner(s);
+        int i = 0;
+        boolean[] row = new boolean[60];
+        while (scanner.hasNextBoolean()) {
+            row[i] = scanner.nextBoolean();
+            i++;
+        }
+        return row;
     }
 }
