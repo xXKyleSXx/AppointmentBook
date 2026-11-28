@@ -36,7 +36,7 @@ public class AppointmentBook {
     public boolean makeAppointment(int startPeriod, int endPeriod, int duration) {
         for(int i = startPeriod; i <= endPeriod; i++) {
             int freeBlock = findFreeBlock(i, duration);
-            if (freeBlock > 1) {
+            if (freeBlock >= 0) {
                 reserveBlock(i, freeBlock, duration);
                 return true;
             }

@@ -38,15 +38,16 @@ public class Main {
         File f = new File("schedules.txt");
         Scanner s = new Scanner(f);
         int i = 0;
-        boolean[][] schedule = new boolean[8][60];
-        int j = 0;
         while (s.hasNextLine()) {
+            boolean[][] schedule = new boolean[8][60];
+            int j = 0;
             while (j < schedule.length) {
                 String line = s.nextLine();
                 if (line.length() > 0) {
+                    schedule[j] = getRow(line);
                     j++;
+                    //I didn't use an else statement here, I don't think i need one
                 }
-                else schedule[j] = getRow(line);
             }
             schedules[i] = new AppointmentBook(schedule);
             i++;
@@ -54,7 +55,7 @@ public class Main {
             f = new File ("requests.txt");
             s = new Scanner(f);
             int meetings = 0;
-        while (s.hasNextLine()) {
+        while (s.hasNextInt()) {
             int schedule2 = s.nextInt();
             int start = s.nextInt();
             int end = s.nextInt();
