@@ -4,6 +4,9 @@ import java.io.File;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+
+        //I already tested the examples, I commented these to get the # of meetings easier
+
         // boolean[][] schedule = new boolean[8][60];
         // AppointmentBook a = new AppointmentBook(schedule);
         // //Table of 6 things, but only 3 are a yes
@@ -64,7 +67,7 @@ public class Main {
                 meetings++;
             }
         }
-        System.out.println(meetings);
+        System.out.println("There will be " + meetings + " meetings");
     }
     public static boolean[] getRow (String s) {
         Scanner scanner = new Scanner(s);
